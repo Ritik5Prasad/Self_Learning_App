@@ -9,14 +9,14 @@ import {
 } from "react-native";
 import LottieView from 'lottie-react-native';
 import { TouchableOpacity } from "react-native";
-import Carousel, { Pagination } from "react-native-snap-carousel";
+import Carousel from 'react-native-reanimated-carousel';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import help from '../../assets/image/help.png'
 let ScreenHeight = Dimensions.get("window").height;
 let ScreenWidth = Dimensions.get("window").width;
-
+const width = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -27,6 +27,8 @@ const styles = StyleSheet.create({
 });
 
 function OnBoarding({ navigation }) {
+
+  
  
   const [activeSlide, setactiveSlide] = useState(0);
 
@@ -91,11 +93,14 @@ function OnBoarding({ navigation }) {
 
       <View style={{ flex: 1, width: "100%", paddingTop: 50 }}>
         <Carousel
-          layout={"default"}
+      
+          width={width}
+          height={width / 2}
           data={carouselItems}
+          loop
+          scrollAnimationDuration={1000}
           renderItem={_renderItem}
-          sliderWidth={ScreenWidth - 40}
-          itemWidth={ScreenWidth - 40}
+          
           onSnapToItem={(index) => {
             setactiveSlide(index);
           }}
