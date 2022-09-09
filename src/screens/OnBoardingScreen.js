@@ -8,12 +8,15 @@ import {
   Dimensions,
 } from "react-native";
 import LottieView from 'lottie-react-native';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { TouchableOpacity } from "react-native";
 import Carousel from 'react-native-reanimated-carousel';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
 import help from '../../assets/image/help.png'
+
+
+
 let ScreenHeight = Dimensions.get("window").height;
 let ScreenWidth = Dimensions.get("window").width;
 const width = Dimensions.get('window').width;
@@ -23,13 +26,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     color: "black",
+    width:ScreenWidth,
+    height:ScreenHeight
   },
 });
 
 function OnBoarding({ navigation }) {
 
-  
- 
+
+
   const [activeSlide, setactiveSlide] = useState(0);
 
   const carouselItems = [
@@ -58,8 +63,8 @@ function OnBoarding({ navigation }) {
         }}
       >
         <View style={{ width: 500, height: 300 }}>
-      <LottieView source={item.image} autoPlay={true}  loop={true} />
-    </View>
+          <LottieView source={item.image} autoPlay={true} loop={true} />
+        </View>
         <Text
           style={{
             textAlign: "center",
@@ -77,35 +82,39 @@ function OnBoarding({ navigation }) {
   return (
     <View style={[styles.container, { padding: 20 }]}>
 
-      <TouchableOpacity style={{alignSelf:'flex-end',
-           justifyContent:'flex-end',
-           alignItems:'flex-end',
-           marginRight:310
-          }}
-          onPress={()=>navigation.navigate('HelpScreen')}
-          >
-        <MaterialCommunityIcons
-                name="help"
-                size={26}
-                color="#4B4A4F"
-              />
+      <TouchableOpacity style={{
+        alignSelf: 'flex-end',
+        justifyContent: 'flex-end',
+        alignItems: 'flex-end',
+        marginRight: 302
+      }}
+        onPress={() => navigation.navigate('HelpScreen')}
+      >
+        <Image source={help} style={{width:30,height:30}} />
       </TouchableOpacity>
 
       <View style={{ flex: 1, width: "100%", paddingTop: 50 }}>
         <Carousel
-      
-          width={width}
-          height={width / 2}
+
+          width={wp("90%")}
+          height={hp("80%")}
           data={carouselItems}
           loop
           scrollAnimationDuration={1000}
           renderItem={_renderItem}
-          
+          showLength={false}
           onSnapToItem={(index) => {
             setactiveSlide(index);
           }}
-          autoplay={true}
-          
+          autoPlay
+          autoPlayInterval={2000}
+          mode="parallax"
+          modeConfig={{
+            parallaxAdjacentItemScale: 0.75,
+            parallaxScrollingOffset: 20,
+            parallaxScrollingScale: 0.85
+          }}
+
         />
         <View
           style={{
@@ -193,9 +202,9 @@ function OnBoarding({ navigation }) {
         <Text style={{ color: "#646464" }}>Join Us To learn</Text>
         <Text style={{ color: "#646464" }}>in a simplified manner</Text>
         <Text style={{ color: "#646464" }}>
-             
+
         </Text>
-        
+
         <TouchableOpacity
           onPress={() => navigation.navigate("LoginScreen")}
           style={{
