@@ -6,28 +6,28 @@ import {
   Image,
   Platform,
   Dimensions,
+  TouchableOpacity 
 } from "react-native";
 import LottieView from 'lottie-react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import { TouchableOpacity } from "react-native";
-import Carousel from 'react-native-reanimated-carousel';
+import Carousel from 'react-native-snap-carousel';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import help from '../../assets/image/help.png'
+import { ScrollView } from "react-native-gesture-handler";
 
 
 
 let ScreenHeight = Dimensions.get("window").height;
 let ScreenWidth = Dimensions.get("window").width;
 const width = Dimensions.get('window').width;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
     color: "black",
     width:ScreenWidth,
-    height:ScreenHeight
+    height:ScreenHeight,
+    backgroundColor:'white'
   },
 });
 
@@ -80,40 +80,33 @@ function OnBoarding({ navigation }) {
     );
   };
   return (
-    <View style={[styles.container, { padding: 20 }]}>
+    <ScrollView style={[styles.container, { padding: 20 }]} 
+    contentContainerStyle={{alignItems: "center",
+    justifyContent: "center",}}
+    >
 
       <TouchableOpacity style={{
         alignSelf: 'flex-end',
         justifyContent: 'flex-end',
         alignItems: 'flex-end',
-        marginRight: 302
+        
       }}
         onPress={() => navigation.navigate('HelpScreen')}
       >
-        <Image source={help} style={{width:30,height:30}} />
+        <Image source={help} style={{width:25,height:25}} />
       </TouchableOpacity>
 
-      <View style={{ flex: 1, width: "100%", paddingTop: 50 }}>
-        <Carousel
-
-          width={wp("90%")}
-          height={hp("80%")}
+     
+      <Carousel
+          layout={"default"}
           data={carouselItems}
-          loop
-          scrollAnimationDuration={1000}
           renderItem={_renderItem}
-          showLength={false}
+          sliderWidth={ScreenWidth - 40}
+          itemWidth={ScreenWidth - 40}
           onSnapToItem={(index) => {
             setactiveSlide(index);
           }}
-          autoPlay
-          autoPlayInterval={2000}
-          mode="parallax"
-          modeConfig={{
-            parallaxAdjacentItemScale: 0.75,
-            parallaxScrollingOffset: 20,
-            parallaxScrollingScale: 0.85
-          }}
+          autoplay={true}
 
         />
         <View
@@ -121,6 +114,8 @@ function OnBoarding({ navigation }) {
             flexDirection: "row",
             alignItems: "center",
             alignSelf: "center",
+            marginBottom:100,
+            marginTop:20
           }}
         >
           {activeSlide == 0 ? (
@@ -186,7 +181,7 @@ function OnBoarding({ navigation }) {
               }}
             ></View>
           )}
-        </View>
+      
       </View>
       <View style={{ flex: 1, alignItems: "center", width: "100%" }}>
         <Text
@@ -194,10 +189,11 @@ function OnBoarding({ navigation }) {
             color: "black",
             fontSize: 26,
             marginVertical: 25,
-            fontWeight: "bold",
+            
+            fontFamily:'Quicksand-Bold'
           }}
         >
-          Learn Once, Code Again
+          Learn Once, Code Anytime
         </Text>
         <Text style={{ color: "#646464" }}>Join Us To learn</Text>
         <Text style={{ color: "#646464" }}>in a simplified manner</Text>
@@ -242,7 +238,7 @@ function OnBoarding({ navigation }) {
 
 
       </View>
-    </View>
+    </ScrollView>
   );
 }
 

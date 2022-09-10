@@ -9,7 +9,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator } from "@react-navigation/stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 //SCREENS
@@ -60,7 +60,7 @@ const Drawer = createDrawerNavigator();
 
 // MAIN  STACK NAVIGATION
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 const Navigations = () => {
 

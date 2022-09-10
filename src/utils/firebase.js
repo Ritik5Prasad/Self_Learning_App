@@ -1,5 +1,4 @@
 import * as firebase from "firebase";
-import Firebase from "@react-native-firebase/app";
 
 if (!firebase.apps.length) {
   const firebaseApp = firebase.initializeApp({
