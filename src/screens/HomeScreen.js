@@ -5,6 +5,12 @@ import LottieView from 'lottie-react-native';
 import { useIsFocused, useNavigation } from '@react-navigation/native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import HomeStack from './HomeStack';
+import DoubtStack from './DoubtStack';
+import BookStack from './BookStack';
+
+
+
 const activeDoubt = (isPlay) => {
   return (
     <View style={{ width: 80, height: 60 }}>
@@ -39,7 +45,8 @@ const tabData = [
   {
     name: 'Home',
     activeIcon: activeHome(true),
-    inactiveIcon: activeHome(false)
+    inactiveIcon: activeHome(false),
+    
   },
   {
     name: 'Doubt',
@@ -60,6 +67,7 @@ const Navigations = () => {
   const [tabs, setTabs] = useState(tabData)
   const [bgColor, setBgColor] = useState('#FFC0C7')
   const navigation = useNavigation();
+  const [tabScreen, setTabsScreen] = useState("HomeStack")
 
 
 
@@ -70,13 +78,16 @@ const Navigations = () => {
         if (item.name === 'Home' && val.name === 'Home') {
           val.activeIcon = Object.assign({}, activeHome(true))
           setBgColor('#FFC0C7')
+          setTabsScreen('HomeStack');
         } else if (item.name === 'Book' && val.name === 'Book') {
           val.activeIcon = Object.assign({}, activeBook(true))
           setBgColor('#FF7128')
+          setTabsScreen('BookStack');
         }
       else if (item.name === 'Doubt' && val.name === 'Doubt') {
         val.activeIcon = Object.assign({}, activeDoubt(true))
         setBgColor('yellow')
+        setTabsScreen('DoubtStack');
       }
         else {
           val.activeIcon = null
@@ -88,9 +99,8 @@ const Navigations = () => {
   }
   return (
 
-    <View style={[styles.container]}>
-      
-      <View style={{ backgroundColor: bgColor, flex: 1, }}>
+    <View style={[styles.container,{backgroundColor:bgColor}]}>
+      <View style={[styles.headerPart,{backgroundColor:bgColor}]}>
       <TouchableOpacity onPress={()=>navigation.openDrawer()}  style={styles.drawer}>
       <MaterialCommunityIcons 
            size={23}
@@ -99,6 +109,17 @@ const Navigations = () => {
            />
       </TouchableOpacity>
       </View>
+      { tabScreen=='HomeStack' ?
+       <HomeStack />
+       :
+       <>
+       {tabScreen=='BookStack'?
+       <BookStack />
+        :
+        <DoubtStack />
+       }
+       </>
+      }
 
       <Tabbar
         tabs= {tabs}          
@@ -126,6 +147,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  headerPart:{
+    borderBottomEndRadius:20,
+    borderBottomStartRadius:20,
+    elevation:5,
+  },
   drawer:{
     alignSelf:'flex-start',
     backgroundColor:'white',
@@ -136,6 +162,8 @@ const styles = StyleSheet.create({
     borderRadius:20,
     justifyContent:'center',
     alignContent:'center',
-    alignItems:'center'
+    alignItems:'center',
+    position:'relative',
+    elevation:10
   }
 })
