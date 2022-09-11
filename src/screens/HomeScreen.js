@@ -77,7 +77,7 @@ const Navigations = () => {
       tempTabs.map((val) => {
         if (item.name === 'Home' && val.name === 'Home') {
           val.activeIcon = Object.assign({}, activeHome(true))
-          setBgColor('#FFC0C7')
+          setBgColor('#551b83')
           setTabsScreen('HomeStack');
         } else if (item.name === 'Book' && val.name === 'Book') {
           val.activeIcon = Object.assign({}, activeBook(true))
@@ -86,7 +86,7 @@ const Navigations = () => {
         }
       else if (item.name === 'Doubt' && val.name === 'Doubt') {
         val.activeIcon = Object.assign({}, activeDoubt(true))
-        setBgColor('yellow')
+        setBgColor('#c28417')
         setTabsScreen('DoubtStack');
       }
         else {

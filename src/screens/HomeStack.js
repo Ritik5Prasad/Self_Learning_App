@@ -14,6 +14,6 @@ export default HomeStack
 const styles=StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor:'#FFC0C7'
+        backgroundColor:'#551b83'
     }
 })

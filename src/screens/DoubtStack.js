@@ -14,6 +14,6 @@ export default DoubtStack
 const styles=StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor:'yellow'
+        backgroundColor:'#c28417'
     }
 })
