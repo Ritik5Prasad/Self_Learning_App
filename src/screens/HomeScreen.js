@@ -65,7 +65,7 @@ const tabData = [
 
 const Navigations = () => {
   const [tabs, setTabs] = useState(tabData)
-  const [bgColor, setBgColor] = useState('#FFC0C7')
+  const [bgColor, setBgColor] = useState('#551b83')
   const navigation = useNavigation();
   const [tabScreen, setTabsScreen] = useState("HomeStack")
 
