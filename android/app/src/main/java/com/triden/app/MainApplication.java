@@ -16,7 +16,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-
+import com.facebook.react.modules.i18nmanager.I18nUtil;
 
 import expo.modules.ApplicationLifecycleDispatcher;
 import expo.modules.ReactNativeHostWrapper;
@@ -57,10 +57,13 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
-
+ I18nUtil sharedI18nUtilInstance = I18nUtil.getInstance(); //<== AmerllicA config
+        sharedI18nUtilInstance.forceRTL(this, false); //<== AmerllicA config
+        sharedI18nUtilInstance.allowRTL(this, false); //<== AmerllicA config
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
     ApplicationLifecycleDispatcher.onApplicationCreate(this);
   }
+   
 
   @Override
   public void onConfigurationChanged(Configuration newConfig) {

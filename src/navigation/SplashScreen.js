@@ -5,7 +5,7 @@ import {
    Dimensions,
    Animated,
    LogBox,
-   I18nManager,
+   
    Text
 } from 'react-native'
 import { ProgressBar } from "@react-native-community/progress-bar-android";
@@ -17,9 +17,7 @@ LogBox.ignoreAllLogs(true)
 
 function SplashScreen({ navigation }) {
 
-    useEffect(() => {
-        I18nManager.forceRTL(true)
-      }, [])
+  
     
   const [isStop, setIsStop] = useState(false);
   const width = new Animated.Value(200); //360

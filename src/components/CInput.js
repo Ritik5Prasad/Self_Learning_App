@@ -18,7 +18,9 @@ const CInput=({
     placeholder,
     secureText,
     onFocus = () => {},
+    theme,
     ...props
+    
 })=> {
 
   const [isFocused, setIsFocused] = React.useState(false);
@@ -28,7 +30,8 @@ const CInput=({
   return(
     <View >
         
-      <View style={styles.pass}>
+      <View style={[styles.pass,{borderColor:theme}]}>
+       
       
         <TextInput style={{
           fontSize:18,
@@ -42,19 +45,20 @@ const CInput=({
         <TouchableOpacity onPress={()=>setToggleOn(!toggleOn)}>
           <MaterialCommunityIcons 
            size={20}
-           color='#22a9dd'
+           color={theme}
            name={toggleOn ? "eye-off-outline" : "eye-outline"}
            />
         </TouchableOpacity>
+       
       </View>
       </View>
   );
 }
 
   return (
-    <View style={styles.textContainer}>
+    <View style={[styles.textContainer,{borderColor:theme  }]}>
         <TextInput placeholder={placeholder}
-         style={styles.text}
+         style={[styles.text,{borderColor:theme }]}
          {...props}
         />
       
@@ -68,7 +72,7 @@ const styles=StyleSheet.create({
   text:{
     borderRadius:5,
     borderWidth:1,
-    borderColor:'#22a9dd',
+    
     fontSize:18,
     fontFamily:'Poppins-Medium',
     width:300,
@@ -77,7 +81,7 @@ const styles=StyleSheet.create({
   pass:{
     borderRadius:5,
     borderWidth:1,
-    borderColor:'#22a9dd',
+    
     fontSize:18,
     fontFamily:'Poppins-Medium',
     width:300,

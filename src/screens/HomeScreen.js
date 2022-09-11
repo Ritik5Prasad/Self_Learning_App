@@ -1,19 +1,29 @@
 import React, { useEffect, useState } from 'react'
-import { I18nManager, StyleSheet, Text, View } from 'react-native'
+import {  StyleSheet, Text, View,TouchableOpacity } from 'react-native'
 import Tabbar from "@mindinventory/react-native-tab-bar-interaction";
 import LottieView from 'lottie-react-native';
+import { useIsFocused, useNavigation } from '@react-navigation/native'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const activeBook = (isPlay) => {
+const activeDoubt = (isPlay) => {
   return (
     <View style={{ width: 80, height: 60 }}>
-      <LottieView source={require(`../../assets/svg/book.json`)} autoPlay={isPlay} loop={false} />
+      <LottieView source={require(`../../assets/svg/question.json`)} autoPlay={isPlay} loop={true} />
     </View>
   )
 }
+
 const activeHome = (isPlay) => {
   return (
     <View style={{ width: 80, height: 60 }}>
       <LottieView source={require(`../../assets/svg/program.json`)} autoPlay={isPlay} loop={false} />
+    </View>
+  )
+}
+const activeBook = (isPlay) => {
+  return (
+    <View style={{ width: 80, height: 60 }}>
+      <LottieView source={require(`../../assets/svg/book.json`)} autoPlay={isPlay} loop={false} />
     </View>
   )
 }
@@ -25,16 +35,23 @@ const activeHome = (isPlay) => {
 
 
 const tabData = [
-  {
-    name: 'Book',
-    activeIcon: activeBook(true),
-    inactiveIcon: activeBook(false)
-  },
+  
   {
     name: 'Home',
     activeIcon: activeHome(true),
     inactiveIcon: activeHome(false)
   },
+  {
+    name: 'Doubt',
+    activeIcon: activeDoubt(true),
+    inactiveIcon: activeDoubt(false)
+  },
+  {
+    name: 'Book',
+    activeIcon: activeBook(true),
+    inactiveIcon: activeBook(false)
+  },
+  
   
  
 ]
@@ -42,10 +59,9 @@ const tabData = [
 const Navigations = () => {
   const [tabs, setTabs] = useState(tabData)
   const [bgColor, setBgColor] = useState('#FFC0C7')
+  const navigation = useNavigation();
 
-  useEffect(() => {
-    I18nManager.forceRTL(true)
-  }, [])
+
 
   const onTabChange = (item) => {
     let tempTabs =[...tabs]
@@ -58,6 +74,10 @@ const Navigations = () => {
           val.activeIcon = Object.assign({}, activeBook(true))
           setBgColor('#FF7128')
         }
+      else if (item.name === 'Doubt' && val.name === 'Doubt') {
+        val.activeIcon = Object.assign({}, activeDoubt(true))
+        setBgColor('yellow')
+      }
         else {
           val.activeIcon = null
         }
@@ -69,10 +89,15 @@ const Navigations = () => {
   return (
 
     <View style={[styles.container]}>
-      <View style={{ backgroundColor: bgColor, flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <View style={{ width: 500, height: 300 }}>
-      <LottieView source={require(`../../assets/svg/pc.json`)} autoPlay={true} loop={true} />
-    </View>
+      
+      <View style={{ backgroundColor: bgColor, flex: 1, }}>
+      <TouchableOpacity onPress={()=>navigation.openDrawer()}  style={styles.drawer}>
+      <MaterialCommunityIcons 
+           size={23}
+           color='black'
+           name='menu'
+           />
+      </TouchableOpacity>
       </View>
 
       <Tabbar
@@ -101,4 +126,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  drawer:{
+    alignSelf:'flex-start',
+    backgroundColor:'white',
+    marginVertical:20,
+    marginHorizontal:10,
+    width:40,
+    height:40,
+    borderRadius:20,
+    justifyContent:'center',
+    alignContent:'center',
+    alignItems:'center'
+  }
 })

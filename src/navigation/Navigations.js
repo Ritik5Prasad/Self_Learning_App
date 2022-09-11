@@ -30,31 +30,31 @@ import HelpScreen from '../screens/HelpScreen'
 
 //COMPONENTS
 
-// import CustomDrawer from '../components/CustomDrawer'
+import CustomDrawer from '../components/CustomDrawer'
 
 
 //CUSTOM DRAWER NAVIGATION
 
 const Drawer = createDrawerNavigator();
 
-// const UserListDrawer = () => (
-//   <Drawer.Navigator
-//       drawerWidth="200"
-//       drawerContent={props => <CustomDrawer {...props} />}
-//       screenOptions={({ route }) => ({
-//           drawerStyle: {
-//               width: 320
-//           },
-//           headerShown: false,
+const MainScreen = () => (
+  <Drawer.Navigator
+      drawerWidth="200"
+      drawerContent={props => <CustomDrawer {...props} />}
+      screenOptions={({ route }) => ({
+          drawerStyle: {
+              width: 320
+          },
+          headerShown: false,
 
-//       })}
-//       initialRouteName='UserListTab'
-//       >
+      })}
+      initialRouteName='HomeScreen'
+      >
 
-//       <Drawer.Screen name="UserListTab" component={UserListTab} />
+      <Drawer.Screen name="HomeScreen" component={HomeScreen} />
 
-//   </Drawer.Navigator>
-// );
+  </Drawer.Navigator>
+);
 
 
 
@@ -78,9 +78,13 @@ const Navigations = () => {
       try {
           let logindata = await AsyncStorage.getItem('login_data');
           let parsed = JSON.parse(logindata);
-          console.log('login data on navigation page' + parsed.id);
+          if(parsed==null){
+          setInitialRouteName('OnBoardingScreen');
+        return
+        }
+          console.log('login data on navigation page' + JSON.stringify(parsed));
           if (parsed) {
-              setInitialRouteName('HomeScreen')
+              setInitialRouteName('MainScreen')
               return
           }
       }
@@ -103,7 +107,7 @@ const Navigations = () => {
                       initialRouteName={initialRouteName}
                       screenOptions={{ headerShown: false }}>
                       
-                      <Stack.Screen name="HomeScreen" component={HomeScreen} />
+                      <Stack.Screen name="MainScreen" component={MainScreen} />
                       <Stack.Screen name="LoginScreen" component={LoginScreen} />
                       <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
                       <Stack.Screen name="OnBoardingScreen" component={OnBoardingScreen} />

@@ -188,7 +188,7 @@ function OnBoarding({ navigation }) {
           style={{
             color: "black",
             fontSize: 26,
-            marginVertical: 25,
+            marginVertical: 5,
             
             fontFamily:'Quicksand-Bold'
           }}
@@ -207,34 +207,36 @@ function OnBoarding({ navigation }) {
             borderWidth: 1,
             borderColor: "#C19F1E",
             borderRadius: 25,
-            padding: RFValue(15, 816),
+            padding: RFValue(10, 816),
             width: "100%",
             marginTop: 20,
           }}
         >
-          <Text style={{ color: "#343434", textAlign: "center" }}>Login</Text>
+          <Text style={{ color: "#C19F1E",fontSize:18, textAlign: "center",fontFamily:'Poppins-Medium', }}>Login</Text>
         </TouchableOpacity>
-
+       <View style={{height:80,width:'100%'}}>
         <TouchableOpacity
           onPress={() => navigation.navigate("RegisterScreen")}
           style={{
             backgroundColor: "#C19F1E",
             borderRadius: 25,
-            padding: RFValue(15, 816),
+            padding: RFValue(10, 816),
             width: "100%",
             marginTop: 20,
+            elevation:5
           }}
         >
           <Text
             style={{
               color: "white",
-
-              textAlign: "center",
+              fontSize:18, textAlign: "center",fontFamily:'Poppins-Medium',
+             
             }}
           >
             Sign Up
           </Text>
         </TouchableOpacity>
+        </View>
 
 
       </View>

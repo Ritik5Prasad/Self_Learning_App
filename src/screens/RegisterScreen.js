@@ -12,12 +12,13 @@ import {
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import LottieView from 'lottie-react-native';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import CInput from "../components/CInput";
 import CButton from '../components/CButton'
 import { db, auth } from "../utils/firebase";
 import { saveTokenInFirestore } from "../utils/tokenUtils";
 import * as firebase from "firebase";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation,CommonActions } from "@react-navigation/native";
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
@@ -58,6 +59,24 @@ const RegisterScreen = () => {
             saveTokenInFirestore(email, "students");
             setLoading(false)
         setRegisterd(true);
+        db.collection("students")
+        .where("email", "==", email)
+        .get()
+        .then(async (snap) => {
+          if (!snap.empty) {
+            setLoading(true);
+
+            snap.forEach( async function (doc) {
+              const data = {
+                id: doc.id,
+                data: doc.data(),
+              };
+              await AsyncStorage.setItem(
+                  'login_data',
+                  JSON.stringify(data)
+                );
+            });
+          }}) 
           })
           .catch(err=>alert(err))
         }) 
@@ -81,9 +100,9 @@ const RegisterScreen = () => {
 
     ])
     const [email,setEmail]=useState("");
+    const [anime,setAnime] = useState(false)
     const [name,setName]=useState("");
     const [password,setPassword]=useState("");
-    const [anime,setAnime] = useState(false)
 
 
      if(registered){
@@ -98,7 +117,14 @@ const RegisterScreen = () => {
               color:'green',textAlign:'center',margin:10,marginTop:150
               }}>Hi! {name} You are successfully Registerd</Text>
               <View style={{alignSelf:'center'}}>
-              <CButton title="Let's Go" color='#22a9dd' onPress={()=>{navigation.navigate('HomeScreen')}} btnBorder='black' btnColor='#83C702' btnTextColor='black' />
+              <CButton title="Let's Go" color='#22a9dd' onPress={()=>{
+               navigation.dispatch(
+                CommonActions.reset({
+                  index: 0,
+                  routes: [{ name: "MainScreen" }],
+                })
+              );
+              }} btnBorder='black' btnColor='#83C702' btnTextColor='black' />
               </View>
             </View>
         )
@@ -112,9 +138,9 @@ const RegisterScreen = () => {
             </View>
           {anime?
             <>
-            <CInput placeholder='Full Name' secureText={false}  onChangeText={text =>setName(text)}/>
-           <CInput placeholder='Email' secureText={false}  onChangeText={text =>setEmail(text)}/>           
-           <CInput placeholder='Password' secureText={true}  onChangeText={text =>setPassword(text)} />
+            <CInput placeholder='Full Name' secureText={false}  onChangeText={text =>setName(text)} theme='#22a9dd'/>
+           <CInput placeholder='Email' secureText={false}  onChangeText={text =>setEmail(text)} theme='#22a9dd'/>           
+           <CInput placeholder='Password' secureText={true}  onChangeText={text =>setPassword(text)} theme='#22a9dd'/>
            <View style={{margin:20}}>
             { loading ?
             <View style={{ width: 150, height:150 }}>
